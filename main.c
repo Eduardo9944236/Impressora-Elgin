@@ -196,4 +196,43 @@ void exibirMenu(void) {
     printf("--------------------------------------\n");
 }
 
+/* ===================== Funcoes da impressora ===================== */
+
+void configurarConexao(void) {
+    if (!conexaoAberta) {
+        tipo = lerInteiro("Digite o tipo de conexao (1 para USB, 2 para Serial, etc.): ");
+        capturarEntrada("Digite o modelo da impressora: ", modelo, sizeof(modelo));
+        capturarEntrada("Digite a porta de conexao (ex: USB): ", conexao, sizeof(conexao));
+        parametro = lerInteiro("Digite o parametro adicional (ex: 0 para padrao): ");
+        printf("Parametros de conexao configurados com sucesso.\n");
+    } else {
+        printf("Conexao ja configurada. Pronta para uso.\n");
+    }
+}
+
+void abrirConexao(void) {
+    if (!conexaoAberta) {
+        int retorno = AbreConexaoImpressora(tipo, modelo, conexao, parametro);
+        if (retorno == 0) {
+            conexaoAberta = 1;
+            printf("Conexao aberta com sucesso.\n");
+        } else {
+            printf("Erro ao abrir conexao. Codigo de erro: %d\n", retorno);
+        }
+    } else {
+        printf("Conexao ja esta aberta.\n");
+    }
+}
+
+void fecharConexao(void) {
+    if (conexaoAberta) {
+        FechaConexaoImpressora();
+        conexaoAberta = 0;
+        printf("Conexao fechada.\n");
+    } else {
+        printf("Nenhuma conexao aberta para fechar.\n");
+    }
+}
+
+
 
