@@ -356,6 +356,50 @@ void emitirSinalSonoro(void) {
     }
 }
 
+/* ===================== Programa principal ===================== */
+
+int main(void) {
+    if (!carregarDLL()) {
+        printf("Programa encerrado.\n");
+        return 1;
+    }
+
+    if (!fazerLogin()) {
+        printf("Acesso negado.\n");
+        FreeLibrary(dll);
+        return 1;
+    }
+
+    int opcao = -1;
+    while (opcao != 0) {
+        exibirMenu();
+        opcao = lerInteiro("\nDigite a opcao desejada: ");
+
+        switch (opcao) {
+            case 1: configurarConexao(); break;
+            case 2: abrirConexao(); break;
+            case 3: fecharConexao(); break;
+            case 4: imprimirTexto(); break;
+            case 5: imprimirQRCode(); break;
+            case 6: imprimirCodigoBarras(); break;
+            case 7: imprimirXMLSAT(); break;
+            case 8: imprimirXMLCancelamentoSAT(); break;
+            case 9: abrirGavetaElgin(); break;
+            case 10: abrirGaveta(); break;
+            case 11: emitirSinalSonoro(); break;
+            case 0: 
+                fecharConexao();
+                printf("Encerrando programa...\n");
+                break;
+            default:
+                printf("Opcao invalida.\n");
+                break;
+        }
+    }
+
+    FreeLibrary(dll);
+    return 0;
+}
 
 
 
