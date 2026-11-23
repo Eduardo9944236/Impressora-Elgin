@@ -234,5 +234,88 @@ void fecharConexao(void) {
     }
 }
 
+void imprimirTexto(void) {
+    if (conexaoAberta) {
+        int retorno = ImpressaoTexto("Teste de impressao", 1, 4, 0);
+        if (retorno == 0) {
+            Corte(5);
+            printf("Impressao realizada com sucesso.\n");
+        } else {
+            printf("Erro ao realizar impressao. Codigo de erro: %d\n", retorno);
+        }
+    } else {
+        printf("Nao tem conexao com impressora em aberto.\n");
+    }
+}
+
+void imprimirQRCode(void) {
+    if (conexaoAberta) {
+        int retorno = ImpressaoQRCode("Teste de impressao", 6, 4);
+        if (retorno == 0) {
+            Corte(5);
+            printf("QR Code impresso com sucesso.\n");
+        } else {
+            printf("Erro ao imprimir QR Code. Codigo de erro: %d\n", retorno);
+        }
+    } else {
+        printf("Erro: Conexao nao esta aberta.\n");
+    }
+}
+
+void imprimirCodigoBarras(void) {
+    if (conexaoAberta) {
+        int retorno = ImpressaoCodigoBarras(8, "{A012345678912", 100, 2, 3);
+        if (retorno == 0) {
+            Corte(5);
+            printf("Codigo de barras impresso com sucesso.\n");
+        } else {
+            printf("Erro ao imprimir codigo de barras. Codigo de erro: %d\n", retorno);
+        }
+    } else {
+        printf("Erro: Conexao nao esta aberta.\n");
+    }
+}
+
+void imprimirXMLSAT(void) {
+    if (!conexaoAberta) {
+        printf("Nao tem conexao com impressora em aberto.\n");
+        return;
+    }
+    char *dadosXML = lerArquivo("XMLSAT.xml");
+    if (dadosXML == NULL) {
+        printf("Nao foi possivel ler o XMLSAT.xml\n");
+        return;
+    }
+    int retorno = ImprimeXMLSAT(dadosXML, 0);
+    Corte(5);
+    free(dadosXML);
+    if (retorno == 0) {
+        printf("XML SAT impresso com sucesso!\n");
+    } else {
+        printf("Erro ao imprimir XML SAT. Codigo de erro: %d\n", retorno);
+    }
+}
+
+void imprimirXMLCancelamentoSAT(void) {
+    if (!conexaoAberta) {
+        printf("Nao tem conexao com impressora em aberto.\n");
+        return;
+    }
+    char *dadosXML = lerArquivo("CANC_SAT.xml");
+    if (dadosXML == NULL) {
+        printf("Nao foi possivel ler o CANC_SAT.xml\n");
+        return;
+    }
+    int retorno = ImprimeXMLCancelamentoSAT(dadosXML, ASS_QRCODE, 0);
+    Corte(5);
+    free(dadosXML);
+    if (retorno == 0) {
+        printf("XML de cancelamento impresso com sucesso!\n");
+    } else {
+        printf("Erro ao imprimir cancelamento. Codigo de erro: %d\n", retorno);
+    }
+}
+
+
 
 
