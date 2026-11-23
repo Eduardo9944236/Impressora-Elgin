@@ -316,6 +316,46 @@ void imprimirXMLCancelamentoSAT(void) {
     }
 }
 
+void abrirGavetaElgin(void) {
+    if (!conexaoAberta) {
+        printf("Nao tem conexao com impressora em aberto.\n");
+        return;
+    }
+    int retorno = AbreGavetaElgin(1, 50, 50);
+    if (retorno == 0) {
+        printf("Gaveta Elgin aberta com sucesso!\n");
+    } else {
+        printf("Erro ao abrir gaveta. Codigo de erro: %d\n", retorno);
+    }
+}
+
+void abrirGaveta(void) {
+    if (!conexaoAberta) {
+        printf("Nao tem conexao com impressora em aberto.\n");
+        return;
+    }
+    int retorno = AbreGaveta(1, 5, 10);
+    if (retorno == 0) {
+        printf("Gaveta aberta com sucesso!\n");
+    } else {
+        printf("Erro ao abrir gaveta. Codigo de erro: %d\n", retorno);
+    }
+}
+
+void emitirSinalSonoro(void) {
+    if (!conexaoAberta) {
+        printf("Nao tem conexao com impressora em aberto.\n");
+        return;
+    }
+    int qtd = lerInteiro("Quantidade de apitos: ");
+    int retorno = SinalSonoro(qtd, 50, 5);
+    if (retorno == 0) {
+        printf("Sinal sonoro emitido com sucesso!\n");
+    } else {
+        printf("Erro ao emitir sinal sonoro. Codigo de erro: %d\n", retorno);
+    }
+}
+
 
 
 
